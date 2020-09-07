@@ -7,7 +7,7 @@ try:
     # raise ValueError
 except:
     print("reloading word base...")
-    with open('../data/fanfics.txt', 'r', encoding='utf8', errors='ignore') as fin:
+    with open('../fanfics.txt', 'r', encoding='utf8', errors='ignore') as fin:
         raw = fin.read().lower()
 
     # split into dialogue

@@ -18,14 +18,14 @@ try:
     #     data = pickle.load(d)
     raise stemmer
 except:
-    with open("../data/intents.json") as file:
+    with open("intents.json") as file:
         data = json.load(file)
 
 print(data)
 
 
 try:
-    with open("data.pickle", "rb") as f:
+    with open("files/data.pickle", "rb") as f:
         words, labels, training, output, docs_x = pickle.load(f)
     # raise stemmer
 except:
@@ -74,7 +74,7 @@ except:
     training = numpy.array(training)
     output = numpy.array(output)
 
-    with open("data.pickle", "wb") as f:
+    with open("files/data.pickle", "wb") as f:
         pickle.dump((words, labels, training, output, docs_x), f)
 
 tensorflow.compat.v1.reset_default_graph()

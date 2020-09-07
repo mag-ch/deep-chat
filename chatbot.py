@@ -10,6 +10,7 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import warnings
+import re
 warnings.filterwarnings('ignore')
 
 import nltk
@@ -22,12 +23,17 @@ nltk.download('popular', quiet=True) # for downloading packages
 
 
 #Reading in the corpus
-with open('../data/diaogue.txt','r', encoding='utf8', errors ='ignore') as fin:
+with open('fanfics.txt', 'r', encoding='utf8', errors ='ignore') as fin:
     raw = fin.read().lower()
 
+raw = re.findall(r'"(.*?)"', raw)
+raw = " ".join(raw)
+raw = raw.replace(",",".")
+
 #TOkenisation
-sent_tokens = nltk.sent_tokenize(raw)# converts to list of sentences 
+sent_tokens = nltk.sent_tokenize(raw)# converts to list of sentences
 word_tokens = nltk.word_tokenize(raw)# converts to list of words
+
 
 # Preprocessing
 lemmer = WordNetLemmatizer()
@@ -68,26 +74,23 @@ def response(user_response):
         robo_response = robo_response.strip("\"")
         return robo_response
 
-
-flag=True
-print("ROBO: My name is Robo. I will answer your queries about Chatbots. If you want to exit, type Bye!")
-while(flag==True):
-    user_response = input()
+def get_robot_response(user_response):
+    # user_response = input()
     user_response=user_response.lower()
     if(user_response!='bye'):
         if(user_response=='thanks' or user_response=='thank you' ):
-            flag=False
-            print("ROBO: You are welcome..")
+            # print("ROBO: You are welcome..")
+            return "ROBO: You are welcome.."
         else:
             if(greeting(user_response)!=None):
-                print("ROBO: "+greeting(user_response))
+                # print("ROBO: "+greeting(user_response))
+                return "ROBO: "+greeting(user_response)
             else:
-                print("ROBO: ",end="")
-                print(response(user_response))
+                # print("ROBO: ",end="")
+                res = response(user_response)
+                # print(response(user_response))
                 sent_tokens.remove(user_response)
+                return "ROBO: "+res
     else:
-        flag=False
-        print("ROBO: Bye! take care..")    
-        
-        
-
+        # print("ROBO: Bye! take care..")
+        return "see ya bish"
