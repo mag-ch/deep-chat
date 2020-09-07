@@ -11,9 +11,7 @@ google-auth==1.21.0
 google-auth-oauthlib==0.4.1
 google-pasta==0.2.0
 h5py==2.10.0
-idna @ file:///tmp/build/80754af9/idna_1593446292537/work
 importlib-metadata @ file:///C:/ci/importlib-metadata_1593431910144/work
-joblib @ file:///tmp/build/80754af9/joblib_1594236160679/work
 mkl-service==2.3.0
 nltk==3.5
 numpy @ file:///C:/ci/numpy_and_numpy_base_1596233948451/work
@@ -23,9 +21,7 @@ Pillow==7.2.0
 protobuf==3.13.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-pycparser @ file:///tmp/build/80754af9/pycparser_1594388511720/work
 PyJWT==1.7.1
-pyOpenSSL @ file:///tmp/build/80754af9/pyopenssl_1594392929924/work
 pyreadline==2.1
 PySocks==1.7.1
 regex==2020.7.14
