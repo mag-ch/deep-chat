@@ -78,19 +78,66 @@ def get_robot_response(user_response):
     # user_response = input()
     user_response=user_response.lower()
     if(user_response!='bye'):
-        if(user_response=='thanks' or user_response=='thank you' ):
+        if("thank" in user_response ):
             # print("ROBO: You are welcome..")
-            return "ROBO: You are welcome.."
+            return "You're welcome :)"
         else:
             if(greeting(user_response)!=None):
                 # print("ROBO: "+greeting(user_response))
-                return "ROBO: "+greeting(user_response)
+                return greeting(user_response)
             else:
                 # print("ROBO: ",end="")
                 res = response(user_response)
                 # print(response(user_response))
                 sent_tokens.remove(user_response)
-                return "ROBO: "+res
+                return res
     else:
         # print("ROBO: Bye! take care..")
         return "see ya bish"
+
+def format_pronouns(robo_response, name):
+    tokens = nltk.tokenize.word_tokenize(robo_response)
+    pos = nltk.pos_tag(tokens)
+    # pos = nltk.pos_tag(robo_response.split())
+    sentt = nltk.ne_chunk(pos, binary = False)
+    person_list = []
+    person = []
+    name = ""
+    for subtree in sentt.subtrees(filter=lambda t: t.label() == 'PERSON'):
+        for leaf in subtree.leaves():
+            person.append(leaf[0])
+        if len(person) > 1:  # avoid grabbing lone surnames
+            for part in person:
+                name += part + ' '
+            if name[:-1] not in person_list:
+                person_list.append(name[:-1])
+            name = ''
+        person = []
+
+    print (person_list)
+
+def format_response(response):
+    response_dict = {
+        1: ['she', 'he']
+    }
+
+text = """
+Some economists have responded positively to Bitcoin, including 
+Francois R. Velde, senior economist of the Federal Reserve in Chicago 
+who described it as "an elegant solution to the problem of creating a 
+digital currency." In November 2013 Richard Branson announced that 
+Virgin Galactic would accept Bitcoin as payment, saying that he had invested 
+in Bitcoin and found it "fascinating how a whole new global currency 
+has been created", encouraging others to also invest in Bitcoin.
+Other economists commenting on Bitcoin have been critical. 
+Economist Paul Krugman has suggested that the structure of the currency 
+incentivizes hoarding and that its value derives from the expectation that 
+others will accept it as payment. Economist Larry Summers has expressed 
+a "wait and see" attitude when it comes to Bitcoin. Nick Colas, a market 
+strategist for ConvergEx Group, has remarked on the effect of increasing 
+use of Bitcoin and its restricted supply, noting, "When incremental 
+adoption meets relatively fixed supply, it should be no surprise that 
+prices go up. And that’s exactly what is happening to BTC prices."
+"""
+
+format_pronouns(text, "mag")

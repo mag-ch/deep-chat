@@ -11,18 +11,19 @@
  body, html {
  height: 100%;
  margin: 0;
- font-family: Arial;
+ font-family: Courier;
+ overflow: hidden;
  }
  #chatbox {
  margin-left: auto;
  margin-right: auto;
- width: 40%;
+ width: 90%;
  margin-top: 60px;
  }
  #userInput {
  margin-left: auto;
  margin-right: auto;
- width: 40%;
+ width: 90%;
  margin-top: 60px;
  }
  #textInput {
@@ -63,50 +64,70 @@
  width: 300px;
  }
  .boxed {
+ display: flex;
+ justify-content: space-between;
+ position: relative;
  margin-left: auto;
  margin-right: auto;
- width: 78%;
- margin-top: 60px;
- border: 1px solid green;
+ width: 50%;
+ max-height: 60%;
+<!-- border: 1px solid green;-->
+ }
+ .avatar {
+ margin-top: 20px;
+ }
+ #msgContainer {
+ overflow-y: scroll;
+ max-height: 250px;
  }
  </style>
 </head>
-<body><div>
- <h1 align="center"><b>Welcome to Python-BOT</b></h1>
- <h4 align="center"><b>Your one stop destination for all your needs</b></h4>
- <p align="center"><img src="https://raw.githubusercontent.com/patelkelvin/Python-BOT/master/templates/favicon.ico" alt="Python-BOT" height="210" width="220"></p>
- <div class="boxed">
- <div>
- <div id="chatbox">
- <p class="botText">
- <span>Hi! I'm Python-BOT your personal ChatBot</span>
- </p>
- </div>
- <div id="userInput">
- <input id="textInput" type="text" name="msg" placeholder="Message"/>
- </div>
- </div>
- <script>
-     function getBotResponse() {
-         var rawText = $("#textInput").val();
-         var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
-         $("#textInput").val("");
-         $("#chatbox").append(userHtml);
-         document.getElementById("userInput").scrollIntoView({ block: "start", behavior: "smooth" });
-         $.get("/get", { msg: rawText }).done(function (data) {
-             var botHtml = '<p class="botText"><span>' + data + "</span></p>";
-             $("#chatbox").append(botHtml);
-             document.getElementById("userInput").scrollIntoView({ block: "start", behavior: "smooth"});
-         });
-     }
-     $("#textInput").keypress(function (e) {
-         if (e.which == 13) {
-         console.log("presed enter")
-            getBotResponse();
-         }}
-     );
- </script>
- </div>
- </div>
+<body>
+<div>
+     <h1 align="center"><b>Welcome to Bot-kun</b></h1>
+     <h4 align="center"><b>Don't ask me too much, I might say something weird</b></h4>
+     <p align="center"><img src="https://raw.githubusercontent.com/patelkelvin/Python-BOT/master/templates/favicon.ico" alt="Python-BOT" height="210" width="220"></p>
+     <div class="boxed">
+         <div class="avatar" id="bot_pic"></div>
+         <div id="msgContainer">
+             <div id="chatbox">
+                 <p class="botText">
+                     <span style="background-color:{{bot_color}};">Hey there! I can't wait to talk with you!</span>
+                 </p>
+             </div>
+             <div id="userInput">
+                 <input id="textInput" type="text" name="msg" placeholder="Message"/>
+             </div>
+         </div>
+         <div class="avatar" id="my_pic"></div>
+         <script>
+             function getBotResponse() {
+                 var rawText = $("#textInput").val();
+                 var userHtml = '<p class="userText"><span style="background-color:{{my_color}};">' + rawText + "</span></p>";
+                 $("#textInput").val("");
+                 $("#chatbox").append(userHtml);
+                 document.getElementById("userInput").scrollIntoView({ block: "start", behavior: "smooth" });
+                 $.get("/chat/get", { msg: rawText }).done(function (data) {
+                     var botHtml = '<p class="botText"><span style="background-color:{{bot_color}};">' + data + "</span></p>";
+                     $("#chatbox").append(botHtml);
+                     document.getElementById("userInput").scrollIntoView({ block: "start", behavior: "smooth"});
+                 });
+             }
+             $("#textInput").keypress(function (e) {
+                 if (e.which == 13) {
+                    getBotResponse();
+                 }}
+             );
+             var create_avatar = function(src, targetId){
+	     var img = document.createElement('img');
+	     img.src = src;
+	     document.getElementById(targetId).appendChild(img);
+	     }
+
+         create_avatar('{{avatar}}', 'my_pic');
+         create_avatar('{{bot_avatar}}', 'bot_pic');
+         </script>
+     </div>
+</div>
 </body>
 </html>

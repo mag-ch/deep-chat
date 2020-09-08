@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bot-kun</title>
+     <style>
+     body, html {
+     height: 100%;
+     margin: 0;
+     font-family: Arial;
+     }
+     .row {
+     display: flex;
+     margin: auto;
+     width: 60%;
+     border: 1px solid green;
+     }
+     button {
+     margin-left: auto;
+     margin-right: auto;
+     margin-top: 60px;
+     border: 1px solid green;
+     }
+     </style>
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+</head>
+<body>
+<h1 align="center">Pick an avatar to get started!</h1>
+<div class="row">
+<button id="maleImg" onclick="storeAvatar(this)"><img src="https://i.ibb.co/TrKK2nr/download20200901194435.png" alt="download20200901194435" border="0"></button>
+<button id="femaleImg" onclick="storeAvatar(this)"><img src="https://i.ibb.co/m0HCN2f/download20200901201411.png" alt="download20200901201411" border="0" /></button>
+    <script>
+  function storeAvatar(gender) {
+    var amount = gender.getAttribute('id')
+    console.log(amount);
+    window.location.href='/chat/' + amount
+  }
+</script>
+</div>
+</body>
+</html>
